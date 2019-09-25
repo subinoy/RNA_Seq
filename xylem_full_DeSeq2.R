@@ -5,6 +5,9 @@ leaf_dat <- read.csv("leaf_389_sample.csv", header=T, row.names=1)
 
 xylem_dat <- read.csv("xylem_385_sample.csv", header=T, row.names=1)
 
+## Experimenting of differential gene expression from FPKM values
+## Just testing how it behaves!!
+
 library(DESeq2)
 data <- as.data.frame(cbind(leaf_dat, xylem_dat))
 total <- as.data.frame(apply(data, 2, as.integer))
