@@ -16,10 +16,10 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        r-version: [3.6, 4.0]
+        r-version: [4.0.0]
 
     steps:
       - uses: actions/checkout@v2
