@@ -22,16 +22,25 @@ rownames(total) <- rownames(leaf_dat)
 # Creating a column full of 385 rows as "xylem"
 xlm <- rep("xylem", 385)
 x_row <- colnames(xylem_dat)
+
+# Creating a dataframe of sample names and condition as xylem
+# This condition names will be used for DESeq2 dataframe creation
 xylem_row_cond <- as.data.frame(cbind(x_row,xlm))
 names(xylem_row_cond) <- c("sample", "condition")
 
+##########################################################
+
+## Same kind of dataframe creation for leaf dataset
 lf <- rep("leaf", 389)
 l_row <- colnames(leaf_dat)
 leaf_row_cond <- as.data.frame(cbind(l_row,lf))
 names(leaf_row_cond) <- c("sample", "condition")
 
+# Concatening the xylem and leaf dataframe of "condition" only
 sample_info <- as.data.frame(rbind(leaf_row_cond, xylem_row_cond))
 rownames(sample_info) <- sample_info$sample
+
+## Deseq2 matrix creation from Xylem and Leaf expression data
 
 colData <- sample_info
 
@@ -40,6 +49,8 @@ dds <- DESeqDataSetFromMatrix(countData = total,colData = colData ,design = ~ co
 dds <- DESeq(dds)
 res <- results(dds)
 res
+
+# Saving results as table for future use
 write.table(res, file="leaf_vs_xylem_diff_expr_may_28.tbl")
 result_A_B <- results(dds, contrast=c("condition","leaf","xylem")) ## contrast specifies conditions to be tested
 
