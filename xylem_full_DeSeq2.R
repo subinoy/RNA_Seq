@@ -1,5 +1,10 @@
 
+# Loading library
 library(dplyr)
+
+# Loading Raw expression datasets of leaf and xylem tissues of Poplar tree
+# 389 samples for Leaf
+# 385 samples for Xylem
 
 leaf_dat <- read.csv("leaf_389_sample.csv", header=T, row.names=1)
 
@@ -9,10 +14,12 @@ xylem_dat <- read.csv("xylem_385_sample.csv", header=T, row.names=1)
 ## Just testing how it behaves!!
 
 library(DESeq2)
+# Combining columns of leaf and xylem dataframe
 data <- as.data.frame(cbind(leaf_dat, xylem_dat))
 total <- as.data.frame(apply(data, 2, as.integer))
 rownames(total) <- rownames(leaf_dat)
 
+# Creating a column full of 385 rows as "xylem"
 xlm <- rep("xylem", 385)
 x_row <- colnames(xylem_dat)
 xylem_row_cond <- as.data.frame(cbind(x_row,xlm))
